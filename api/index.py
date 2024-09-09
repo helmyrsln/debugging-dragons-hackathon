@@ -29,6 +29,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = database_url
 db = SQLAlchemy(app)
 
 class PR(db.Model):
+    __tablename__ = 'PR'  # Explicitly specify the table name
     id = db.Column(db.Integer, primary_key=True)
     pr_id = db.Column(db.String(200), nullable=False)
     sourceBranchName = db.Column(db.String(200), nullable=False)
@@ -54,15 +55,15 @@ def handle_pr():
         files_diff = get_files_diff(pr_id)
         files_diff = process_files_diff(files_diff)
         
-        # Retrieve prompt text
-        prompt_file_path = 'prompttext'
+        # Construct the file path assuming prompttext is in the same directory as index.py
+        prompt_file_path = os.path.join(os.path.dirname(__file__), 'prompttext')
+
         try:
             with open(prompt_file_path, 'r') as file:
                 prompt_text = file.read().strip()
         except FileNotFoundError:
             logging.error(f"Prompt file not found: {prompt_file_path}")
             return jsonify({'error': 'Prompt file not found'}), 404
-
         # Send to LLM
         feedback = analyze_code_with_llm(prompt_text, files_diff)
 
@@ -81,8 +82,18 @@ def handle_pr():
 def summary():
     # Query to get the latest pull request reviewed
     latest_entry = PR.query.order_by(PR.date_created.desc()).first()
-    return jsonify({'entry': latest_entry})
-
+    if not latest_entry:
+        return jsonify({'message': 'No entries found in the database.'}), 404
+    return jsonify({'entry': {
+        'id': latest_entry.id,
+        'pr_id': latest_entry.pr_id,
+        'sourceBranchName': latest_entry.sourceBranchName,
+        'targetBranchName': latest_entry.targetBranchName,
+        'content': latest_entry.content,
+        'feedback': latest_entry.feedback,
+        'date_created': latest_entry.date_created
+    }}), 200
+    
 @app.route("/api/healthchecker", methods=["GET"])
 def healthchecker():
     return {"status": "success", "message": "Integrate Flask Framework with Next.js"}
@@ -126,7 +137,7 @@ def get_files_diff(pr_id):
 
 def process_files_diff(files_diff):
     """
-    Processes the files diff and send it to chatgpt to review.
+    `P`rocesses the files diff and send it to chatgpt to review.
     """
     pass
 
@@ -167,7 +178,7 @@ def analyze_code_with_llm(prompt, data):
 
 def create_sample_pr_entry():
     with app.app_context():
-        sample_entry = pr(
+        sample_entry = PR(
             pr_id="12345",
             sourceBranchName="main",
             targetBranchName="feature-branch",
@@ -178,6 +189,12 @@ def create_sample_pr_entry():
         db.session.add(sample_entry)
         db.session.commit()
         logging.info("Sample entry added successfully!")
+
+if __name__ == "__main__":
+    with app.app_context():
+        db.create_all()
+        create_sample_pr_entry()  # Add sample data for testing
+    app.run(debug=True)
 
 #if __name__ == "__main__":
 #    port = int(os.environ.get("PORT", 5000))

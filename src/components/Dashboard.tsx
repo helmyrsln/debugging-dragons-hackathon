@@ -14,7 +14,7 @@ const Dashboard: React.FC = () => {
   const fetchData = async () => {
     setLoading(true); // Set loading state to true when fetching data
     try {
-      const response = await fetch("/api/summary"); // Call the Next.js API route
+      const response = await fetch("/api/summary"); // Fetch data from the Next.js API route
       if (!response.ok) {
         throw new Error("Error fetching data from backend.");
       }
