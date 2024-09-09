@@ -2,10 +2,36 @@
 
 ## Prerequisites
 
-1. **Create a virtual environment**: python3 -m venv venv or python -m venv venv
-2. **Type in the terminal**: venv\Scripts\activate to activate the env
-3. **pnpM**: To install: 
-4. npm i -g pnpm
+1. **Create a virtual environment**:
+
+## On Windows
+
+python -m venv venv
+
+## On macOS/Linux
+
+python3 -m venv venv
+
+2. **Type in the terminal**
+
+## On Windows
+
+.\venv\Scripts\activate
+
+## On macOS/Linux
+
+source venv/bin/activate
+
+3. install python dependecies `pip install -r requirements.txt`
+
+## Start Flask Server
+
+python index.py
+
+# Frontend
+
+4. **pnpM**: To install:
+5. npm i -g pnpm
 
 # Setup Instructions
 
