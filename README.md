@@ -3,8 +3,9 @@
 ## Prerequisites
 
 1. **Create a virtual environment**: python3 -m venv venv or python -m venv venv
-2. **pnpM**: To install: 
-3. npm i -g pnpm
+2. **Type in the terminal**: venv\Scripts\activate to activate the env
+3. **pnpM**: To install: 
+4. npm i -g pnpm
 
 # Setup Instructions
 
