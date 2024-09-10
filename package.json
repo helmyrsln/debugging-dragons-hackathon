@@ -8,17 +8,18 @@
     "next-dev": "next dev",
     "dev": "concurrently \"pnpm run next-dev\" \"pnpm run flask-dev\"",
     "dev-2": "concurrently \"pnpm run next-dev\" \"pnpm run flask-dev-2\"",
-    "vercel-build": "concurrently \"pnpm run next-dev\" \"pnpm run flask-dev-2\""
+    "vercel-build": "concurrently \"pnpm run next-dev\" \"pnpm run flask-dev\""
   },
   "dependencies": {
+    "clsx": "^2.1.1",
     "concurrently": "^9.0.0",
     "debugging-dragons-hackathon": "file:",
     "next": "14.2.8",
     "react": "^18",
     "react-dom": "^18",
-    "clsx": "^2.1.1",
     "tailwind-merge": "^2.5.2",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "vercel": "^37.4.0"
   },
   "devDependencies": {
     "@radix-ui/react-tabs": "^1.1.0",
