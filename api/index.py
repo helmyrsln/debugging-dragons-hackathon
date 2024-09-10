@@ -20,7 +20,7 @@ BITBUCKET_REPO_SLUG = os.getenv("BITBUCKET_REPO_SLUG")
 ACCESS_TOKEN = os.getenv("ACCESS_TOKEN")
 
 app = Flask(__name__)
-CORS(app, resources={r"/api/*": {"origins": "http://localhost:3000"}}) # Replace with your frontend URL
+CORS(app, resources={r"/api/*": {"origins": "https://debugging-dragons-hackathon.vercel.app"}}) # Replace with your frontend URL
 
 # Configure database URI
 database_url = os.environ.get('DATABASE_URL', 'sqlite:///test.db').replace("postgres://", "postgresql://", 1)
