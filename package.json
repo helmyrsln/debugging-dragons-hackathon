@@ -5,9 +5,10 @@
   "scripts": {
     "flask-dev": "FLASK_DEBUG=1 pip3 install -r requirements.txt && python3 -m flask --app api/index run -p 8000 --reload",
     "flask-dev-2": "pip install -r requirements.txt && python -m flask --app api/index run -p 8000 --reload",
-    "next-dev": "concurrently \"pnpm run next-dev\" \"pnpm run flask-dev-2\"",
+    "next-dev": "next dev",
     "dev": "concurrently \"pnpm run next-dev\" \"pnpm run flask-dev\"",
-    "dev-2": "concurrently \"pnpm run next-dev\" \"pnpm run flask-dev-2\""
+    "dev-2": "concurrently \"pnpm run next-dev\" \"pnpm run flask-dev-2\"",
+    "vercel-build": "concurrently \"pnpm run next-dev\" \"pnpm run flask-dev-2\""
   },
   "dependencies": {
     "concurrently": "^9.0.0",
